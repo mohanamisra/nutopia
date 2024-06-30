@@ -7,9 +7,6 @@ const audioElement = document.querySelector("audio");
 // pass it into the audio context as a "source"
 const track = audioContext.createMediaElementSource(audioElement);
 
-// connect the input element "track" to the output or destination
-track.connect(audioContext.destination);
-
 // get the play button
 const playButton = document.querySelector("button");
 
@@ -40,8 +37,6 @@ audioElement.addEventListener("ended", (e) => {
 
 // create gain node
 const gainNode = audioContext.createGain();
-// connect it to the audio graph residing in your audioContext
-track.connect(gainNode).connect(audioContext.destination);
 
 const volumeControl = document.querySelector("#volume");
 volumeControl.addEventListener("input", () => {
