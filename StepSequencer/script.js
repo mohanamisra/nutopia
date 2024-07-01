@@ -36,10 +36,34 @@ attackControl.addEventListener("input", (e) => {
     attackTime = parseInt(e.target.value, 10);
 }, false);
 
-// Release is the time taken for the soud to reach from sustain value to absolute silence
+// Release is the time taken for the sound to reach from sustain value to absolute silence
 let releaseTime = 0.5;
 const releaseControl = document.querySelector("#release");
 releaseControl.addEventListener("input", (e) => {
     releaseTime = parseInt(e.target.value, 10);
 }, false);
 
+const osc = new OscillatorNode(audioContext, {
+    type: "sine",
+    frequency: 90,
+});
+
+const amp = new GainNode(audioContext, {
+    value: 1,
+});
+
+const lfo = new OscillatorNode(audioContext, {
+    type: "square",
+    frequency: 30,
+});
+
+lfo.connect(amp.gain);
+osc.connect(amp).connect(audioContext.destination);
+
+const button = document.querySelector("button");
+
+button.addEventListener("click", (e) => {
+    lfo.start();
+    osc.start(0);
+    osc.stop(1000);
+})
