@@ -10,6 +10,7 @@ const myWave = new PeriodicWave(audioContext, {
     imag: wavetable.imag,
 })
 
+const sweepLength = 2;
 function playSweep(time) {
     // create the oscillator
     const osc = new OscillatorNode(audioContext, {
@@ -17,6 +18,12 @@ function playSweep(time) {
         type: "custom",
         periodicWave: myWave
     });
+    const sweepEnv = new GainNode(audioContext);
+    sweepEnv.gain.cancelScheduledValues(time);
+    sweepEnv.gain.setValueAtTime(0, time);
+    sweepEnv.gain.linearRampToValueAtTime(1, time + attackTime);
+    sweepEnv.gain.linearRampToValueAtTime(0, time + sweepLength - releaseTime);
+
     osc.connect(audioContext.destination);
     osc.start(time);
     osc.stop(time + 1);
@@ -35,3 +42,4 @@ const releaseControl = document.querySelector("#release");
 releaseControl.addEventListener("input", (e) => {
     releaseTime = parseInt(e.target.value, 10);
 }, false);
+
