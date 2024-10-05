@@ -1,17 +1,18 @@
 import React from 'react';
 
-const Pipe = ({gapSize, gapPosition}) => {
+const Pipe = ({size, position}) => {
     const pipeStyle = {
         container: {
             width: "100px",
             height: "100%",
             backgroundColor: "white",
+            position: "absolute",
         },
         gap: {
-            height: gapSize,
+            height: size,
             backgroundColor: "#111222",
             position: "relative",
-            top: gapPosition,
+            top: position,
         }
     }
 

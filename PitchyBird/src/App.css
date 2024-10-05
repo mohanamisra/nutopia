@@ -5,6 +5,7 @@
 
 .app-container {
   background: #111222;
+  position: relative;
   height: 100vh;
   margin: 0;
   padding: 0;
