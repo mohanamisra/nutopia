@@ -1,3 +1,11 @@
 * {
-  background: black;
+  margin: 0;
+  padding: 0;
+}
+
+.app-container {
+  background: #111222;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
 }
