@@ -5,7 +5,7 @@ function App() {
 
   return (
     <div className = "app-container">
-        <Pipe/>
+        <Pipe gapPosition="200px" gapSize="20px"/>
     </div>
   )
 }
