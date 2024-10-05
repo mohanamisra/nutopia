@@ -1,14 +1,14 @@
 import React from 'react';
 
-const Bird = ({size}) => {
+const Bird = ({size, position}) => {
     const birdStyles = {
         container: {
+            top: position,
             borderRadius: '50%',
             backgroundColor: "white",
             position: "absolute",
             width: size,
             height: size,
-            left: "500px"
         }
     }
     return (

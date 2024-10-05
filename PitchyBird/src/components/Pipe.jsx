@@ -6,6 +6,7 @@ const Pipe = ({size, position}) => {
             width: "100px",
             height: "100%",
             backgroundColor: "white",
+            left: "35%",
             position: "absolute",
         },
         gap: {

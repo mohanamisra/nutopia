@@ -7,7 +7,7 @@ function App() {
   return (
     <div className = "app-container">
         <Pipe position="200px" size="150px"/>
-        <Bird size = "100px"/>
+        <Bird position="200px" size = "100px"/>
     </div>
   )
 }
