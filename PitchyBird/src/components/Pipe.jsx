@@ -3,7 +3,7 @@ import React from 'react';
 const Pipe = ({size, position}) => {
     const pipeStyle = {
         container: {
-            width: "100px",
+            width: `${Math.min(window.innerWidth * 0.125, 100)}px`,
             height: "100%",
             backgroundColor: "white",
             left: "35%",
@@ -14,6 +14,7 @@ const Pipe = ({size, position}) => {
             backgroundColor: "#111222",
             position: "relative",
             top: position,
+            width: "100%",
         }
     }
 
