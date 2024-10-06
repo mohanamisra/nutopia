@@ -8,9 +8,11 @@ function App() {
     const birdRef = useRef(null);
     let birdPos = useRef(window.innerHeight/2 - 100);
     let targetPos = useRef(0);
+    const pipeRef = useRef(null);
+    let pipePos = useRef(window.innerWidth/2);
 
     useEffect(() => {
-        const smoothMovement = () => {
+        const birdMovement = () => {
             if (birdRef.current) {
                 if(targetPos.current > 500) {
                     birdPos.current -= (targetPos.current - birdPos.current) * 0.01;
@@ -21,10 +23,23 @@ function App() {
                 birdPos.current = Math.min(Math.max(birdPos.current, -1000), window.innerHeight - 90)
                 birdRef.current.style.transform = `translateY(${birdPos.current}px)`;
             }
-            requestAnimationFrame(smoothMovement);
+            requestAnimationFrame(birdMovement);
         };
 
-        smoothMovement();  // Start the animation loop
+        const pipeMovement = () => {
+            if(pipeRef.current) {
+                pipePos.current -= 5;
+                if(pipePos.current < -2000) {
+                    pipePos.current = window.innerWidth/2;
+                }
+                pipeRef.current.style.transform = `translateX(${pipePos.current}px`
+                console.log(pipePos.current)
+            }
+          requestAnimationFrame(pipeMovement);
+        };
+
+        pipeMovement();
+        birdMovement();
     }, []);
 
     const handleClick = () => {
@@ -65,7 +80,7 @@ function App() {
 
     return (
         <div className="app-container">
-            <Pipe position="200px" size="150px" />
+            <Pipe innerRef = {pipeRef} gapPosition="300px" size="150px" pipePosition = {pipePos.current}/>
             <Bird innerRef = {birdRef} position={birdPos.current} size="90px" />
             <button onClick={handleClick}>Click me</button>
         </div>
