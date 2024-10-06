@@ -10,6 +10,7 @@ function App() {
     let targetPos = useRef(0);
     const scoreRef = useRef(0);
     const scoreDisplayRef = useRef(null);
+    const start = useRef(false);
 
     const detectCollision = (birdElement, seedElement) => {
         const birdRect = birdElement.getBoundingClientRect();
@@ -31,7 +32,7 @@ function App() {
 
     useEffect(() => {
         const birdMovement = () => {
-            if (birdRef.current) {
+            if (start.current && birdRef.current) {
                 if (targetPos.current > 500) {
                     birdPos.current -= (targetPos.current - birdPos.current) * 0.01;
                 } else if (targetPos.current < 500) {
@@ -54,7 +55,7 @@ function App() {
 
         const seedMovement = () => {
             seedRefs.current.forEach(({ ref, pos, collected }) => {
-                if (ref.current) {
+                if (start.current && ref.current) {
                     pos.current -= 3;
 
                     if (pos.current < -800) {
@@ -74,6 +75,7 @@ function App() {
     }, []);
 
     const handleClick = () => {
+        start.current = true;
         let audioCtx = new AudioContext();
         navigator.mediaDevices.getUserMedia({ audio: true })
             .then((stream) => {
@@ -121,7 +123,7 @@ function App() {
                 <Seed key={index} innerRef={ref} positionX="50%" positionY={`${Math.random() * 90}%`} size="50px" />
             ))}
 
-            <button onClick={handleClick}>Click me</button>
+            <button onClick={handleClick}>Start Game</button>
         </div>
     );
 }
