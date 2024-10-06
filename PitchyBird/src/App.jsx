@@ -12,12 +12,13 @@ function App() {
     useEffect(() => {
         const smoothMovement = () => {
             if (birdRef.current) {
-                if(targetPos.current > 350) {
-                    birdPos.current -= (targetPos.current - birdPos.current) * 0.1;
+                if(targetPos.current > 500) {
+                    birdPos.current -= (targetPos.current - birdPos.current) * 0.01;
                 }
-                else if(targetPos.current < 350) {
+                else if(targetPos.current < 500) {
                     birdPos.current += (targetPos.current - birdPos.current) * 0.1;
                 }
+                birdPos.current = Math.min(Math.max(birdPos.current, -1000), window.innerHeight - 90)
                 birdRef.current.style.transform = `translateY(${birdPos.current}px)`;
             }
             requestAnimationFrame(smoothMovement);
@@ -53,7 +54,6 @@ function App() {
 
                     const frequency = (maxIndex/bufferLength) * (audioCtx.sampleRate/2)
                     targetPos.current = frequency;
-                    console.log(targetPos.current);
 
                     requestAnimationFrame(getFrequency);
                 };
