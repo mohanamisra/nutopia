@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Seed = ({innerRef, size, positionY}) => {
+const Seed = ({innerRef, size, positionX, positionY}) => {
     const seedStyles = {
         container: {
             backgroundColor: "#111222",
@@ -10,7 +10,7 @@ const Seed = ({innerRef, size, positionY}) => {
             width: size,
             position: "absolute",
             top: positionY,
-            left: "35%",
+            left: positionX,
         }
     }
     return (
