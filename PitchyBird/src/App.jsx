@@ -1,6 +1,7 @@
 import './App.css'
-import Pipe from "./components/Pipe.jsx"
+// import Pipe from "./components/Pipe.jsx"
 import Bird from "./components/Bird.jsx";
+import Seed from "./components/Seed.jsx";
 import { useRef, useEffect } from 'react';
 
 function App() {
@@ -8,8 +9,8 @@ function App() {
     const birdRef = useRef(null);
     let birdPos = useRef(window.innerHeight/2 - 100);
     let targetPos = useRef(0);
-    const pipeRef = useRef(null);
-    let pipePos = useRef(window.innerWidth/2);
+    // const pipeRef = useRef(null);
+    // let pipePos = useRef(window.innerWidth/2);
 
     useEffect(() => {
         const birdMovement = () => {
@@ -18,7 +19,7 @@ function App() {
                     birdPos.current -= (targetPos.current - birdPos.current) * 0.01;
                 }
                 else if(targetPos.current < 500) {
-                    birdPos.current += (targetPos.current - birdPos.current) * 0.1;
+                    birdPos.current += (targetPos.current - birdPos.current) * 0.01;
                 }
                 birdPos.current = Math.min(Math.max(birdPos.current, -1000), window.innerHeight - 90)
                 birdRef.current.style.transform = `translateY(${birdPos.current}px)`;
@@ -26,19 +27,19 @@ function App() {
             requestAnimationFrame(birdMovement);
         };
 
-        const pipeMovement = () => {
-            if(pipeRef.current) {
-                pipePos.current -= 5;
-                if(pipePos.current < -2000) {
-                    pipePos.current = window.innerWidth/2;
-                }
-                pipeRef.current.style.transform = `translateX(${pipePos.current}px`
-                console.log(pipePos.current)
-            }
-          requestAnimationFrame(pipeMovement);
-        };
+        // const pipeMovement = () => {
+        //     if(pipeRef.current) {
+        //         pipePos.current -= 5;
+        //         if(pipePos.current < -2000) {
+        //             pipePos.current = window.innerWidth/2;
+        //         }
+        //         pipeRef.current.style.transform = `translateX(${pipePos.current}px`
+        //         console.log(pipePos.current)
+        //     }
+        //   requestAnimationFrame(pipeMovement);
+        // };
 
-        pipeMovement();
+        // pipeMovement();
         birdMovement();
     }, []);
 
@@ -80,7 +81,7 @@ function App() {
 
     return (
         <div className="app-container">
-            <Pipe innerRef = {pipeRef} gapPosition="300px" size="150px" pipePosition = {pipePos.current}/>
+            {/*<Pipe innerRef = {pipeRef} gapPosition="300px" size="150px" pipePosition = {pipePos.current}/>*/}
             <Bird innerRef = {birdRef} position={birdPos.current} size="90px" />
             <button onClick={handleClick}>Click me</button>
         </div>
