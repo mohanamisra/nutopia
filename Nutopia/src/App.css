@@ -10,7 +10,7 @@
   height: 100vh;
   margin: 0;
   padding: 0;
-  background: url("/src/assets/bg.jpg");
+  background: url("/src/assets/bg.webp");
 }
 
 .score-container {
