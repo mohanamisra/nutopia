@@ -83,6 +83,7 @@ function App() {
         <div className="app-container">
             {/*<Pipe innerRef = {pipeRef} gapPosition="300px" size="150px" pipePosition = {pipePos.current}/>*/}
             <Bird innerRef = {birdRef} position={birdPos.current} size="90px" />
+            <Seed position="200px" size = "50px"/>
             <button onClick={handleClick}>Click me</button>
         </div>
     )
