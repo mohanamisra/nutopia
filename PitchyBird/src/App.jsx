@@ -1,17 +1,33 @@
 import './App.css'
 import Bird from "./components/Bird.jsx";
 import Seed from "./components/Seed.jsx";
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 
 function App() {
     const analyserRef = useRef(null);
     const birdRef = useRef(null);
     let birdPos = useRef(window.innerHeight / 2 - 100);
     let targetPos = useRef(0);
-    const score = useState(0);
+    const scoreRef = useRef(0);
+    const scoreDisplayRef = useRef(null);
 
-    // Create an array of useRefs for 9 seeds
-    const seedRefs = useRef([...Array(9)].map(() => ({ ref: useRef(null), pos: useRef(Math.random() * window.innerWidth) })));
+    const detectCollision = (birdElement, seedElement) => {
+        const birdRect = birdElement.getBoundingClientRect();
+        const seedRect = seedElement.getBoundingClientRect();
+
+        return (
+            birdRect.left < seedRect.right &&
+            birdRect.right > seedRect.left &&
+            birdRect.top < seedRect.bottom &&
+            birdRect.bottom > seedRect.top
+        );
+    };
+
+    const seedRefs = useRef([...Array(9)].map(() => ({
+        ref: useRef(null),
+        pos: useRef(Math.random() * window.innerWidth),
+        collected: useRef(false),
+    })));
 
     useEffect(() => {
         const birdMovement = () => {
@@ -23,19 +39,29 @@ function App() {
                 }
                 birdPos.current = Math.min(Math.max(birdPos.current, -1000), window.innerHeight - 90);
                 birdRef.current.style.transform = `translateY(${birdPos.current}px)`;
+
+                seedRefs.current.forEach(({ ref, collected }) => {
+                    if (ref.current && !collected.current && detectCollision(birdRef.current, ref.current)) {
+                        collected.current = true;
+                        scoreRef.current += 5;
+                        scoreDisplayRef.current.textContent = `Score = ${scoreRef.current}`;
+                        console.log("Collision detected with a seed!");
+                    }
+                });
             }
             requestAnimationFrame(birdMovement);
         };
 
         const seedMovement = () => {
-            seedRefs.current.forEach(({ ref, pos }) => {
+            seedRefs.current.forEach(({ ref, pos, collected }) => {
                 if (ref.current) {
                     pos.current -= 3;
-                    // If the seed crosses the boundary, reset it to the right of the screen
+
                     if (pos.current < -800) {
                         pos.current = window.innerWidth;
                         const newPosY = Math.random() * 90;
                         ref.current.style.top = `${newPosY}%`;
+                        collected.current = false;
                     }
                     ref.current.style.transform = `translateX(${pos.current}px)`;
                 }
@@ -85,8 +111,8 @@ function App() {
 
     return (
         <div className="app-container">
-            <div className = "score-container">
-                Score = {score}
+            <div ref={scoreDisplayRef} className="score-container">
+                Score = 0
             </div>
 
             <Bird innerRef={birdRef} position={birdPos.current} size="90px" />
