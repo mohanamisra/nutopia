@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Bird = ({size, position}) => {
+const Bird = ({innerRef, size, position}) => {
     const birdStyles = {
         container: {
             top: position,
@@ -12,7 +12,7 @@ const Bird = ({size, position}) => {
         }
     }
     return (
-        <div className = "bird-container" style={birdStyles.container}>
+        <div ref = {innerRef} className = "bird-container" style={birdStyles.container}>
             
         </div>
     );
