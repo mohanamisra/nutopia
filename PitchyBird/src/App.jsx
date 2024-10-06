@@ -117,10 +117,10 @@ function App() {
                 Score = 0
             </div>
 
-            <Bird innerRef={birdRef} position={birdPos.current} size="90px" />
+            <Bird innerRef={birdRef} position={birdPos.current} size="150px" />
 
             {seedRefs.current.map(({ ref }, index) => (
-                <Seed key={index} innerRef={ref} positionX="50%" positionY={`${Math.random() * 90}%`} size="50px" />
+                <Seed key={index} innerRef={ref} positionX="50%" positionY={`${Math.random() * 90}%`} size="75px" />
             ))}
 
             <button onClick={handleClick}>Start Game</button>

@@ -10,6 +10,7 @@
   height: 100vh;
   margin: 0;
   padding: 0;
+  background: url("/src/assets/bg.jpg");
 }
 
 .score-container {
@@ -27,11 +28,12 @@ button {
   left: 50%;
   transform: translate(-50%, -50%);
   height: 100px;
-  width: 220px;
+  width: 250px;
   font-size: 30px;
   font-weight: 900;
   border-radius: 20px;
-  background: green;
+  background: saddlebrown;
+  border: 10px solid white;
   color: white;
   font-family: monospace;
 }

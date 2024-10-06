@@ -1,11 +1,12 @@
 import React from 'react';
+import seedImage from '../assets/seed.png'
 
 const Seed = ({innerRef, size, positionX, positionY}) => {
     const seedStyles = {
         container: {
-            backgroundColor: "#111222",
+            background: `url(${seedImage}) no-repeat center center`,
+            backgroundSize: 'contain',
             borderRadius: "50%",
-            border: "1px solid white",
             height: size,
             width: size,
             position: "absolute",
