@@ -14,12 +14,15 @@
 }
 
 .score-container {
-  color: white;
   font-family: monospace, sans-serif;
+  font-weight: 700;
+  padding: 20px;
   font-size: 25px;
   position: absolute;
-  right: 20px;
-  top: 10px;
+  right: 0;
+  top: 0;
+  border-bottom-left-radius: 10px;
+  background: white;
 }
 
 button {
