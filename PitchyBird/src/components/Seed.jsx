@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Seed = ({innerRef, size, position}) => {
+const Seed = ({innerRef, size, positionY}) => {
     const seedStyles = {
         container: {
             backgroundColor: "#111222",
@@ -9,13 +9,12 @@ const Seed = ({innerRef, size, position}) => {
             height: size,
             width: size,
             position: "absolute",
-            top: position,
+            top: positionY,
             left: "35%",
-            margin: "100px",
         }
     }
     return (
-        <div className = "seed-container" style={seedStyles.container}>
+        <div ref = {innerRef} className = "seed-container" style={seedStyles.container}>
 
         </div>
     );

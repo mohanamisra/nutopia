@@ -9,8 +9,8 @@ function App() {
     const birdRef = useRef(null);
     let birdPos = useRef(window.innerHeight/2 - 100);
     let targetPos = useRef(0);
-    // const pipeRef = useRef(null);
-    // let pipePos = useRef(window.innerWidth/2);
+    const seedRef = useRef(null);
+    let seedPos = useRef(100);
 
     useEffect(() => {
         const birdMovement = () => {
@@ -27,19 +27,21 @@ function App() {
             requestAnimationFrame(birdMovement);
         };
 
-        // const pipeMovement = () => {
-        //     if(pipeRef.current) {
-        //         pipePos.current -= 5;
-        //         if(pipePos.current < -2000) {
-        //             pipePos.current = window.innerWidth/2;
-        //         }
-        //         pipeRef.current.style.transform = `translateX(${pipePos.current}px`
-        //         console.log(pipePos.current)
-        //     }
-        //   requestAnimationFrame(pipeMovement);
-        // };
+        const seedMovement = () => {
+            if(seedRef.current) {
+                seedPos.current -= 3;
+                if(seedPos.current < -2000) {
+                    seedPos.current = window.innerWidth/2;
+                    let newPos = Math.random() * (90 - 0) + 0;
+                    seedRef.current.style.top = `${newPos}%`;
+                }
+                console.log(seedRef.current.style.top)
+                seedRef.current.style.transform = `translateX(${seedPos.current}px`
+            }
+          requestAnimationFrame(seedMovement);
+        };
 
-        // pipeMovement();
+        seedMovement();
         birdMovement();
     }, []);
 
@@ -83,7 +85,9 @@ function App() {
         <div className="app-container">
             {/*<Pipe innerRef = {pipeRef} gapPosition="300px" size="150px" pipePosition = {pipePos.current}/>*/}
             <Bird innerRef = {birdRef} position={birdPos.current} size="90px" />
-            <Seed position="200px" size = "50px"/>
+
+            <Seed innerRef = {seedRef} positionY="50%" size = "50px"/>
+            <Seed innerRef = {seedRef} positionY="50%" size = "50px"/>
             <button onClick={handleClick}>Click me</button>
         </div>
     )
