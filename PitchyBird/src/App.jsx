@@ -1,12 +1,30 @@
 import './App.css'
 import Pipe from "./components/Pipe.jsx"
 import Bird from "./components/Bird.jsx";
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 
 function App() {
     const analyserRef = useRef(null);
     const birdRef = useRef(null);
-    let birdPos = useRef(10);
+    let birdPos = useRef(window.innerHeight/2 - 100);
+    let targetPos = useRef(0);
+
+    useEffect(() => {
+        const smoothMovement = () => {
+            if (birdRef.current) {
+                if(targetPos.current > 350) {
+                    birdPos.current -= (targetPos.current - birdPos.current) * 0.1;
+                }
+                else if(targetPos.current < 350) {
+                    birdPos.current += (targetPos.current - birdPos.current) * 0.1;
+                }
+                birdRef.current.style.transform = `translateY(${birdPos.current}px)`;
+            }
+            requestAnimationFrame(smoothMovement);
+        };
+
+        smoothMovement();  // Start the animation loop
+    }, []);
 
     const handleClick = () => {
         let audioCtx = new AudioContext();
@@ -34,11 +52,8 @@ function App() {
                     }
 
                     const frequency = (maxIndex/bufferLength) * (audioCtx.sampleRate/2)
-                    console.log(frequency);
-                    const newPosition = frequency/10;
-                    if(birdRef.current) {
-                        birdRef.current.style.transform = `translateY(${newPosition}px)`
-                    }
+                    targetPos.current = frequency;
+                    console.log(targetPos.current);
 
                     requestAnimationFrame(getFrequency);
                 };
@@ -51,7 +66,7 @@ function App() {
     return (
         <div className="app-container">
             <Pipe position="200px" size="150px" />
-            <Bird innerRef = {birdRef} position={birdPos.current} size="100px" />
+            <Bird innerRef = {birdRef} position={birdPos.current} size="90px" />
             <button onClick={handleClick}>Click me</button>
         </div>
     )

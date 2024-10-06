@@ -4,6 +4,7 @@ const Bird = ({innerRef, size, position}) => {
     const birdStyles = {
         container: {
             top: position,
+            left: '30%',
             borderRadius: '50%',
             backgroundColor: "white",
             position: "absolute",
