@@ -8,8 +8,8 @@ const Bird = ({innerRef, size, position}) => {
             borderRadius: '50%',
             backgroundColor: "white",
             position: "absolute",
-            width: size,
-            height: size,
+            width: `${size}`,
+            height: `${size}`,
         }
     }
     return (
