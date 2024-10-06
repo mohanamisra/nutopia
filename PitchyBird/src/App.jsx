@@ -2,6 +2,8 @@ import './App.css'
 import Bird from "./components/Bird.jsx";
 import Seed from "./components/Seed.jsx";
 import pointSound from "./assets/pointSound.mp3"
+import winSound from "./assets/winSound.mp3"
+import confetti from "./assets/confetti.gif"
 import { useRef, useEffect } from 'react';
 
 function App() {
@@ -12,7 +14,10 @@ function App() {
     const scoreRef = useRef(0);
     const scoreDisplayRef = useRef(null);
     const start = useRef(false);
-    const audio = new Audio(pointSound);
+    const buttonRef = useRef(null);
+    const pointAudio = new Audio(pointSound);
+    const winAudio = new Audio(winSound);
+    const gifRef = useRef("none");
 
     const detectCollision = (birdElement, seedElement) => {
         const birdRect = birdElement.getBoundingClientRect();
@@ -47,9 +52,19 @@ function App() {
                     if (ref.current && !collected.current && detectCollision(birdRef.current, ref.current)) {
                         collected.current = true;
                         ref.current.style.display = "none";
-                        audio.play();
+                        pointAudio.play();
                         scoreRef.current += 5;
                         scoreDisplayRef.current.textContent = `Score = ${scoreRef.current}`;
+
+                        if(scoreRef.current >= 100) {
+                            start.current = false;
+                            winAudio.play();
+                            buttonRef.current.style.display = "block";
+                            buttonRef.current.style.height = "250px"
+                            buttonRef.current.style.width = "300px"
+                            buttonRef.current.innerHTML = `100! <br/>You must love nuts! <br/>Play Again?`;
+                            gifRef.current.style.display = "block";
+                        }
                     }
                 });
             }
@@ -66,6 +81,7 @@ function App() {
                         const newPosY = Math.random() * 90;
                         ref.current.style.top = `${newPosY}%`;
                         collected.current = false;
+                        ref.current.style.display = "block";
                     }
                     ref.current.style.transform = `translateX(${pos.current}px)`;
                 }
@@ -79,6 +95,10 @@ function App() {
 
     const handleClick = () => {
         start.current = true;
+        buttonRef.current.style.display = "none";
+        gifRef.current.style.display = "none";
+        scoreRef.current = 0;
+        scoreDisplayRef.current.textContent = `Score = ${scoreRef.current}`;
         let audioCtx = new AudioContext();
         navigator.mediaDevices.getUserMedia({ audio: true })
             .then((stream) => {
@@ -114,19 +134,21 @@ function App() {
             .catch(err => console.error('Error accessing microphone:', err));
     }
 
+
     return (
         <div className="app-container">
             <div ref={scoreDisplayRef} className="score-container">
                 Score = 0
             </div>
 
+            <img ref = {gifRef} src = {confetti} style={{display: "none", height: "100%", width: "100%"}} />
             <Bird innerRef={birdRef} position={birdPos.current} size="150px" />
 
             {seedRefs.current.map(({ ref }, index) => (
                 <Seed key={index} innerRef={ref} positionX="50%" positionY={`${Math.random() * 90}%`} size="75px" />
             ))}
 
-            <button onClick={handleClick}>Start Game</button>
+            <button ref = {buttonRef} onClick={handleClick}>Start Game</button>
         </div>
     );
 }
