@@ -1,6 +1,7 @@
 import './App.css'
 import Bird from "./components/Bird.jsx";
 import Seed from "./components/Seed.jsx";
+import pointSound from "./assets/pointSound.mp3"
 import { useRef, useEffect } from 'react';
 
 function App() {
@@ -11,6 +12,7 @@ function App() {
     const scoreRef = useRef(0);
     const scoreDisplayRef = useRef(null);
     const start = useRef(false);
+    const audio = new Audio(pointSound);
 
     const detectCollision = (birdElement, seedElement) => {
         const birdRect = birdElement.getBoundingClientRect();
@@ -44,9 +46,10 @@ function App() {
                 seedRefs.current.forEach(({ ref, collected }) => {
                     if (ref.current && !collected.current && detectCollision(birdRef.current, ref.current)) {
                         collected.current = true;
+                        ref.current.style.display = "none";
+                        audio.play();
                         scoreRef.current += 5;
                         scoreDisplayRef.current.textContent = `Score = ${scoreRef.current}`;
-                        console.log("Collision detected with a seed!");
                     }
                 });
             }
